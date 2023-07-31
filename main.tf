@@ -1,14 +1,20 @@
-resource "aws_s3_bucket" "finance" {
-bucket = "finanace-21092020"
-tags = {
-Description = "Finance and Payroll"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+
+  required_version = ">= 1.2.0"
 }
+
+provider "aws" {
+  region  = "us-west-2"
 }
-resource "aws_s3_bucket_object" "finance-2020" {
-content = "/root/finance/finance-2020.doc"
-key = "finance-2020.doc"
-bucket = aws_s3_bucket.finance.id
-}
-data "aws_iam_group" "finance-data" {
-group_name = "finance-analysts"
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = var.bucket_name
+  acl    = var.acl
+
+  tags = var.tags
 }
